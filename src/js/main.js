@@ -1,3 +1,4 @@
+// MARK: Imports
 import Option from "./components/Option";
 
 // https://dog.ceo/api/breed/affenpinscher/images/random
@@ -5,46 +6,55 @@ import Option from "./components/Option";
 
 const BASE_URL = `https://dog.ceo/api/`;
 
-// where the list of dog breeds will be populated.
+// === MARK: DOM Selection
 const breedListEl = document.querySelector("#data-breed-list");
-
-// This image element will display the fetched dog images.
 const imageEl = document.querySelector("img");
 
 // === MARK: Fetch
-
-Purpose: Fetches the list of all dog breeds from the API.
-function getDogsList() {
-  return fetch(`${BASE_URL}breeds/list/all`)
-
-  // Converts the response to JSON.
-    .then((res) => res.json())
-
-    // Extracts the message property from the JSON, which contains the breeds data.
-    .then((data) => data.message)
-    .catch((err) => console.error("error aagyi", err));
+async function getDogsList() {
+  try {
+    const res = await fetch(`${BASE_URL}breeds/list/all`);
+    const data = await res.json();
+    return data.message;
+  } catch (err) {
+    console.error("Error occured", err);
+  }
 }
 
-// TODO: Implement
-
-// Purpose: Fetches a random image for a specified dog breed.
-function getDogImage(breed) {
-
-  // {breed} is the selected dog breed.
-  fetch(`${BASE_URL}breed/${breed}/images/random`)
-    .then((res) => res.json())
-    .then((data) => data.message);
+// Fetch a single dog breed image
+async function getDogImage(breed) {
+  try {
+    const res = await fetch(`${BASE_URL}breed/${breed}/images/random`);
+    const data = await res.json();
+    return data.message;
+  } catch (error) {
+    return console.error(error);
+  }
 }
 
 // === MARK: Render
-function renderSelect() {
-  getDogsList().then((breedList) => {
-    for (let breed in breedList) {
-      breedListEl.appendChild(Option(breed));
-    }
+async function renderSelect() {
+  const dogsList = await getDogsList();
+
+  const fragment = document.createDocumentFragment();
+
+  Object.keys(dogsList).forEach((dogName) => {
+    breedListEl.appendChild(Option(dogName));
   });
 }
 
+async function renderImage(breed) {
+  imageEl.src="loading-load.gif"
+  const dogImage = await getDogImage(breed);
+  imageEl.src = dogImage;
+}
+
+renderImage("poodle");
+
 renderSelect();
 
-function renderImage() {}
+// === MARK:  Events
+breedListEl.addEventListener("change", async (e) => {
+  const currentValue = e.target.value;
+  renderImage(currentValue);
+});
