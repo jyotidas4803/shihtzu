@@ -1,5 +1,6 @@
 // MARK: Imports
 import Option from "./components/Option";
+import SingleCarousel from "./components/SingleCarousel";
 
 // https://dog.ceo/api/breed/affenpinscher/images/random
 // https://dog.ceo/api/breeds/list/all
@@ -8,6 +9,8 @@ const BASE_URL = `https://dog.ceo/api/`;
 
 // === MARK: DOM Selection
 const breedListEl = document.querySelector("#data-breed-list");
+const caouselContetntEl= document.querySelector("content")
+
 const imageEl = document.querySelector("img");
 
 // === MARK: Fetch
