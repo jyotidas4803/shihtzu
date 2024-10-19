@@ -9,27 +9,33 @@ const BASE_URL = `https://dog.ceo/api/`;
 
 // === MARK: DOM Selection
 const breedListEl = document.querySelector("#data-breed-list");
-const caouselContetntEl= document.querySelector("content")
-
-const imageEl = document.querySelector("img");
+const carouselContainerEl = document.querySelector(".carousel-inner");
 
 // === MARK: Fetch
+// Get dog breeds and set to local storage
 async function getDogsList() {
-  try {
-    const res = await fetch(`${BASE_URL}breeds/list/all`);
-    const data = await res.json();
-    return data.message;
-  } catch (err) {
-    console.error("Error occured", err);
+  let breeds = JSON.parse(localStorage.getItem("breeds"));
+
+  if (!breeds) {
+    try {
+      const res = await fetch(`${BASE_URL}breeds/list/all`);
+      const data = await res.json();
+      localStorage.setItem("breeds", JSON.stringify(data.message));
+      breeds = data.message;
+    } catch (err) {
+      console.error("Error occured", err);
+    }
   }
+
+  return breeds;
 }
 
-// Fetch a single dog breed image
-async function getDogImage(breed) {
+// Fetch [images] for a given breed
+async function getDogImages(breed) {
   try {
-    const res = await fetch(`${BASE_URL}breed/${breed}/images/random`);
+    const res = await fetch(`${BASE_URL}breed/${breed}/images`);
     const data = await res.json();
-    return data.message;
+    return data.message.slice(0, 10);
   } catch (error) {
     return console.error(error);
   }
@@ -41,23 +47,39 @@ async function renderSelect() {
 
   const fragment = document.createDocumentFragment();
 
+  console.log(dogsList);
+
   Object.keys(dogsList).forEach((dogName) => {
-    breedListEl.appendChild(Option(dogName));
+    fragment.appendChild(Option(dogName));
   });
+
+  breedListEl.append(fragment);
 }
 
-async function renderImage(breed) {
-  imageEl.src="loading-load.gif"
-  const dogImage = await getDogImage(breed);
-  imageEl.src = dogImage;
+async function renderImageCarousel(breed) {
+  carouselContainerEl.innerHTML = "";
+
+  // Step1: Get list of images based on breed
+  const data = await getDogImages(breed);
+  console.log(data);
+
+  const fragment = document.createDocumentFragment();
+
+  data.forEach((link, idx) => {
+    fragment.appendChild(SingleCarousel(link, idx === 0));
+  });
+
+  carouselContainerEl.appendChild(fragment);
 }
-
-renderImage("poodle");
-
-renderSelect();
 
 // === MARK:  Events
 breedListEl.addEventListener("change", async (e) => {
-  const currentValue = e.target.value;
-  renderImage(currentValue);
+  const currInput = e.target.value;
+  renderImageCarousel(currInput);
+});
+
+// === Render on inital load
+document.addEventListener("DOMContentLoaded", () => {
+  renderSelect();
+  renderImageCarousel("affenpinscher");
 });
