@@ -16,34 +16,44 @@
     />
   </head>
   <body>
-    <main class="container mt-4">
-      <h1 class="display-4">Shihtzu</h1>
-      <p class="lead">
-        Get dog image based on dog breed. Uses the
-        <a href="https://dog.ceo/dog-api/" target="_blank">Dog API</a>
-      </p>
-
-      <!-- Input: Select -->
-      <div class="form-floating">
-        <select name="" id="data-breed-list" class="form-select"></select>
-        <label for="data-breed-list">Select breed</label>
-      </div>
-
-      <br />
-
-      <!-- Render: Image Carousel -->
-      <div
-        id="carouselExampleSlidesOnly"
-        class="carousel slide"
-        data-bs-ride="carousel"
-      >
-        <div class="carousel-inner">
-          <!-- Single Carousel -->
+    <main class="container mt-4 d-flex justify-content-center">
+      <div class="card w-100" style="max-width: 800px;">
+        <div class="card-header bg-light text-center">
+          <h1 class="display-4">Shihtzu</h1>
+        </div>
+        <div class="card-body">
+          <p class="lead text-center">
+            Get dog image based on dog breed. Uses the
+            <a href="https://dog.ceo/dog-api/" target="_blank">Dog API</a>
+          </p>
+    
+          <!-- Input: Select -->
+          <div class="form-floating mb-3">
+            <select name="" id="data-breed-list" class="form-select"></select>
+            <label for="data-breed-list">Select breed</label>
+          </div>
+    
+          <!-- Render: Image Carousel -->
+          <div
+            id="carouselExampleSlidesOnly"
+            class="carousel slide"
+            data-bs-ride="carousel"
+          >
+            <div class="carousel-inner">
+              <!-- Single Carousel -->
+            </div>
+          </div>
+    
+          <p class="lead text-center mt-3">Wait for image to slide</p>
+        </div>
+        <div class="card-footer bg-light text-center">
+          <p class="small text-muted">
+            Powered by <a href="https://dog.ceo/dog-api/" target="_blank">Dog API</a>
+          </p>
         </div>
       </div>
-
-      <p class="lead">Wait for image to slide</p>
     </main>
+    
 
     <!-- Bootstrap -->
     <script
