@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/logo.png" type="image/png">
     <title>Shih - tzu</title>
@@ -14,11 +13,42 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <style>
+      /* Gradient background for the whole page */
+      body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Card styling */
+      .card {
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Added shadow */
+        background-color: #ffffff; /* White background for the card */
+        max-width: 600px;
+      }
+
+      .card-header, .card-footer {
+        background-color: #f8f9fa; /* Lighter color for the header/footer */
+        border-radius: 15px 15px 0 0;
+      }
+
+      .card-body {
+        background-color: #ffffff; /* White background for the body */
+        border-radius: 0 0 15px 15px;
+      }
+
+      .lead {
+        color: #333;
+      }
+    </style>
   </head>
   <body>
     <main class="container mt-4 d-flex justify-content-center">
-      <div class="card w-100" style="max-width: 800px;">
-        <div class="card-header bg-light text-center">
+      <div class="card w-100">
+        <div class="card-header text-center">
           <h1 class="display-4">Shihtzu</h1>
         </div>
         <div class="card-body">
@@ -46,14 +76,13 @@
     
           <p class="lead text-center mt-3">Wait for image to slide</p>
         </div>
-        <div class="card-footer bg-light text-center">
+        <div class="card-footer text-center">
           <p class="small text-muted">
             Powered by <a href="https://dog.ceo/dog-api/" target="_blank">Dog API</a>
           </p>
         </div>
       </div>
     </main>
-    
 
     <!-- Bootstrap -->
     <script
